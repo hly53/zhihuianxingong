@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧安信工</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- <link href="https://cdn.staticfile.org/quill/1.3.6/quill.snow.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/zhaxg.css">
+
+    <!-- <link rel="stylesheet" href="css/timeline.css"> -->
+
+    <!-- <link rel="stylesheet" href="css/prettify.css"> -->
+    <!-- <link rel="stylesheet" href="css/simple.css"> -->
+
+    <!-- <link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet"> -->
+
+    <script src="js/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!-- <script src="js/echarts.min.js"></script> -->
+
+    <!--键盘事件-->
+    <!-- <script src="https://mindmup.s3.amazonaws.com/lib/jquery.hotkeys.js"></script>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-wysiwyg.js"></script> -->
+
+    <!-- 导入kindeditor的js文件 -->
+    <script src="js/kindeditor-all.js"></script>
+    <script src="js/zh-CN.js"></script>
+    <script src="js/prettify.js"></script>
+
+    <!-- <script src="https://cdn.staticfile.org/quill/1.3.6/quill.js"></script> -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- 导航条 -->
+        <div>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid nav-font">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">智慧安信工</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav mynav">
+                            <li class="active">
+                                <!-- <a href="index.html">首页<span class="sr-only">(current)</span></a> -->
+                                <router-link to="/userIndex">首页</router-link>
+                            </li>
+                            <li>
+                                <!-- <a href="#">提问吧</a> -->
+                                <router-link to="/quetion" data-toggle="modal" data-target="#myModal">提问吧</router-link>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="输入查询内容">
+                            </div>
+                            <router-link to="/search" tag="button" type="submit" class="btn btn-default">搜索</router-link>
+                            <!-- <button type="submit" class="btn btn-default">搜索</button> -->
+                        </form>
+                        <!-- 天气 -->
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <span>南宁<div>七日天气</div></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="tianqi">
+                                <a href="#">
+                                    <div>
+                                        <img src="images/qing.png" class="weather">
+                                        <span>今天<div>27-30℃</div></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="tianqi">
+                                <a href="#">
+                                    <div><img src="images/yin.png" class="weather">
+                                        <span>明天<div>27-30℃</div></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">欢迎您张三</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                    aria-expanded="false">个人信息<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- 使用 router-link 组件来导航. -->
+                                    <!-- 通过传入 `to` 属性指定链接. -->
+                                    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+                                    <!-- <li><router-link to="/foo">Go to Foo</router-link></li> -->
+                                    <li>
+                                        <router-link to="/userIndex">详细信息</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/editUser">修改信息</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="#">安全设置</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="#">我的提问</router-link>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <!-- <router-link to="#">退出登录</router-link> -->
+                                        <a href="login-register.html">退出登录</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+
+        <!-- tbody ================================================== -->
+        <div>
+            <!-- <img src="images/首页背景图.jpg" alt=""> -->
+            <router-link to="/"></router-link>
+
+        </div>
+        <!-- 底部导航 ================================================== -->
+        <div class="tfooer">
+            <div class="container">
+                <p>芜湖市戈江区安徽信息工程学院计算机与软件工程系&nbsp;&nbsp;&nbsp;电话：010-666666&nbsp;&nbsp;&nbsp;E-mail：<a href="#">my@zhihuianxinggong.cn</a></p>
+                <p>copyright@2017-小学期A2班梦翼组版权所有&nbsp;&nbsp;&nbsp;联系电话：010-666666</p>
+                <p class="network">
+                    校内网站链接：
+                    <a href="#">安徽信息工程学院官网</a>&nbsp;&nbsp;&nbsp;
+                    <a href="#">安徽信息工程学院财务系统</a>&nbsp;&nbsp;&nbsp;
+                    <a href="#">安徽信息工程学院综合素质学分认定服务平台</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 首页1的模板 -->
+    <template id="page1">
+        <div>
+            <!-- 含有背景图片的首页 -->
+            <img src="images/首页背景图.jpg" alt="">
+            <!-- 嵌套子路由 -->
+            <!-- <router-view></router-view> -->
+        </div>
+    </template>
+
+    <!-- 首页2的模板 -->
+    <template id="page2">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <!-- 用户个人信息 -->
+                <div class="list-group">
+                    <a class="list-group-item active">
+                        <img src="images/头像1.jpg" class="img-circle">
+                        <p style="text-align:center">张三</p>
+                    </a>
+                    <a class="list-group-item">
+                        <!-- <a href="#" class="navbar-link" style="text-decoration:none;color:black">个人信息</a> -->
+                        <router-link to="#" tag="li" class="glyphicon glyphicon-user user-info">个人信息</router-link>
+                    </a>
+                    <a class="list-group-item">
+                        <router-link to="/editUser" tag="li" class="glyphicon glyphicon-edit user-info">修改信息</router-link>
+                    </a>
+                    <li class="list-group-item">
+                        <router-link to="#" tag="li" class="glyphicon glyphicon-lock user-info">安全设置</router-link>
+                    </li>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item user-info-show">
+                        <h3>个人详细信息展示</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <table>
+                            <h4>张三</h4>
+                            <tr>
+                                <td>姓名：张三</td>
+                                <td>昵称：枫树山</td>
+                            </tr>
+                            <tr>
+                                <td>性别：男</td>
+                                <td>出生年月：1999-10-12</td>
+                            </tr>
+                            <tr>
+                                <td>手机：13535952439</td>
+                                <td>邮箱：1079134620@qq.com</td>
+                            </tr>
+                            <tr>
+                                <td>积分：9994</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-md-offset-4">
+                <ul class="list-group">
+                    <li class="list-group-item numbers">
+                        <img src="images/扇形图.jpg" class="img-circle">
+                        <p>提问量</p>
+                        <p>有回答：8</p>
+                        <p>未回答：9</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <ul class="list-group">
+                    <li class="list-group-item numbers">
+                        <img src="images/扇形图.jpg" class="img-circle">
+                        <p>回复量</p>
+                        <p>获得积分：75</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <!-- 编辑个人信息页面 -->
+    <template id="page3">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <!-- 用户个人信息 -->
+                <div class="list-group">
+                    <a class="list-group-item active">
+                        <img src="images/头像1.jpg" class="img-circle">
+                        <p style="text-align:center">张三</p>
+                    </a>
+                    <a class="list-group-item">
+                        <!-- <a href="#" class="navbar-link" style="text-decoration:none;color:black">个人信息</a> -->
+                        <router-link to="/userIndex" tag="li" class="glyphicon glyphicon-user user-info">个人信息</router-link>
+                    </a>
+                    <a class="list-group-item">
+                        <router-link to="/editUser" tag="li" class="glyphicon glyphicon-edit user-info">修改信息</router-link>
+                    </a>
+                    <li class="list-group-item">
+                        <router-link to="#" tag="li" class="glyphicon glyphicon-lock user-info">安全设置</router-link>
+                    </li>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>修改完善个人信息</h4>
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">姓名</label>
+                        <input type="text" class="form-control" disabled placeholder="张三">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">昵称</label>
+                        <input type="text" class="form-control" placeholder="枫树山">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">性别</label>
+                        <input type="text" class="form-control" disabled placeholder="男">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">出生年月</label>
+                        <input type="text" class="form-control" placeholder="1999-10-12">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">手机号</label>
+                        <input type="text" class="form-control" placeholder="13535952439">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="control-label">邮箱</label>
+                        <input type="text" class="form-control" placeholder="1079134620@qq.com">
+                    </li>
+                    <li class="list-group-item">
+                        <button class="btn btn-danger btn-edit" style="margin-left:200px">保存</button>
+                        <button class="btn btn-default btn-edit">取消</button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </template>
+
+    <!-- 用户提问页面 -->
+    <template id="page4">
+        <div>
+            <img src="images/首页背景图.jpg" alt="">
+            <!-- bootstrap模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                添加新的提问
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <label class="control-label">标题</label>
+                            <!-- <div class="row">
+                                <div class="col-md-5"> -->
+                            <input type="text" class="form-control">
+                            <!-- </div>
+                            </div> -->
+
+                            <label class="control-label">主题</label><br>
+                            <!-- <div class="input-group"> -->
+                            <!-- <input type="text" class="form-control" placeholder="校园文化"> -->
+                            <!-- <div class="input-group-btn"> -->
+                            <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button> -->
+                            <!-- <ul class="dropdown-menu">
+                                        <li><a href="#">校园文化</a></li>
+                                        <li><a href="#">学习交流</a></li>
+                                        <li><a href="#">意见反馈</a></li>
+                                    </ul> -->
+                            <select class="form-control">
+                                <option>校园文化</option>
+                                <option>学习交流</option>
+                                <option>意见反馈</option>
+                                <option>暑假</option>
+                                <option>社会实践</option>
+                            </select>
+                            <!-- </div> -->
+                            <!-- </div> -->
+
+                            <label class="control-label">正文</label><br>
+                            <textarea class="form-control" rows="10"></textarea>
+                            <!-- <div id="edit">
+                                <editor id="editor_id" height="500px" width="700px" :content.sync="editorText"
+                                    :afterChange="afterChange()" :loadStyleMode="false" @on-content-change="onContentChange"></editor>
+                                <div> editorTextCopy: {{ editorTextCopy }} </div>
+                            </div> -->
+
+                            <!-- <form action="1.action" method="post" id="liuyanform">
+                                <textarea id="liuyan.content" name="liuyan.content"
+                                    style="width: 100%;" class="el_editorBox"></textarea>
+                                <input type="hidden" name="liuyan.name"> <br>
+                                <p id="fabiao" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#add">
+                                    <span>发表</span>
+                                </p>
+                            </form> -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <!-- <button type="button" class="btn btn-primary"> -->
+                            <router-link to="/showQuetion" tag="button" class="btn btn-primary">保存</router-link>
+                            <!-- <router-link to="/showQuetion" tag="li">保存</router-link> -->
+                            <!-- </button> -->
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+    </template>
+
+    <template id="page5">
+        <div class="container">
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-badge">
+                        <i>2021-6-26</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">校园文化</router-link>
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">最近学校有什么活动？</router-link>
+                            <!-- <p>最近学校有什么活动？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>张三<span>在2021-07-04 14:38:05</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                            <!-- <a>我来抢一楼</a> -->
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                            <!-- <a class="el-icon-d-arrow-right">我也来评论</a> -->
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-badge warning">
+                        <i>2021-6-30</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">暑假</router-link>
+                            <!-- <h4 class="timeline-title">暑假</h4> -->
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">暑假什么时候开学？</router-link>
+                            <!-- <p>暑假什么时候开学？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>李四<span>在2021-07-04 13:38:05</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timeline-badge danger">
+                        <i>2021-7-1</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">天气</router-link>
+                            <!-- <h4 class="timeline-title">天气</h4> -->
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">明天会下大暴雨吗？</router-link>
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>李四<span>在2021-07-04 13:53:05</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">学校</router-link>
+                            <!-- <h4 class="timeline-title">学校</h4> -->
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">学校招生简介是什么？</router-link>
+                            <!-- <p>学校招生简介是什么？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>王五<span>在2021-07-02 13:28:05</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timeline-badge info">
+                        <i>2021-7-2</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">暑假</router-link>
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">学校正式放假是什么时候？</router-link>
+                            <!-- <p>学校正式放假是什么时候？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>王明<span>在2021-07-04 15:38:25</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">暑假</router-link>
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">放假之后，还可以住校吗？</router-link>
+                            <!-- <p>放假之后，还可以住校吗？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>李四<span>在2021-07-04 20:38:05</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-badge success">
+                        <i>2021-7-3</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <router-link to="/answer" tag="h4" class="timeline-title">社会实践</router-link>
+                            <!-- <h4 class="timeline-title">社会实践</h4> -->
+                        </div>
+                        <div class="timeline-body">
+                            <router-link to="/answer" tag="p">每一年暑假都必须要进行一次社会实践吗？不进行会怎么样？</router-link>
+                            <!-- <p>每一年暑假都必须要进行一次社会实践吗？不进行会怎么样？</p> -->
+                            <div class="block">
+                                <el-timeline>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <p>李华<span>在2021-07-04 22:18:23</span></p>
+                                            <router-link to="/answer">我来抢一楼</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                    <el-timeline-item>
+                                        <el-card>
+                                            <router-link to="/answer" class="el-icon-d-arrow-right">我也来评论</router-link>
+                                        </el-card>
+                                    </el-timeline-item>
+                                </el-timeline>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- 回到顶部 -->
+            <el-backtop></el-backtop>
+        </div>
+    </template>
+
+    <!-- 回答页面 -->
+    <template id="page6">
+        <div class="row page-answer">
+            <div class="col-md-6  col-md-offset-3">
+                <ul class="list-group">
+                    <li class="list-group-item question-first">
+                        <!-- <h4>暑假什么时候开学？</h4>
+                        <button class="btn btn-danger">删除</button> -->
+                        <table class="question">
+                            <tr>
+                                <td>最近学校有什么活动？</td>
+                                <td><button class="btn btn-danger">删除</button></td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li class="list-group-item question-first">
+                        <table class="question">
+                            <tr>
+                                <td>互联网+大赛要开始了有没有人和我一起报名参加</td>
+                                <td>
+                                    <p class="time">2021-07-04 14:38:05</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6  col-md-offset-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>用户评论区</h4>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" placeholder="我也来评论" class="form-control comment">
+                        <button class="btn btn-success">回复</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <!-- 搜索页面 -->
+    <template id="page7">
+        <div id="row">
+            <div class="col-md-8  col-md-offset-2">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>查询结果</h4>
+                    </li>
+                    <li class="list-group-item">
+                        <!-- <div class="pager" id="pager"> -->
+                            <span class="form-inline">
+                                <select class="form-control" v-model="pagesize" v-on:change="showPage(pageCurrent,$event,true)" number>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                </select>
+                            </span>
+                            页面显示条数
+                            <span class="find">查询：<input type="text"></span>
+                        <!-- </div> -->
+                        <!-- <div>
+                            查询：<input type="text">
+                        </div> -->
+                        
+                    </li>
+                    <li class="list-group-item">
+                        <el-main>
+                            <el-table :data="tableData">
+                                <el-table-column prop="name" label="发布人" width="100"></el-table-column>
+                                <el-table-column prop="title" label="标题" width="170"></el-table-column>
+                                <el-table-column prop="date" label="发布时间"></el-table-column>
+                                <el-table-column prop="type" label="类型" width="120"></el-table-column>
+                                <el-table-column prop="details" label="查看详情" width="140">
+                                    <template slot-scope="scope">
+                                        <el-button type="success">点击查看</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </el-main>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <script>
+
+        // import editor from 'kindeditor.vue'
+
+        // 1-页面1对应的组件构造器
+        // 1、含有背景图片的首页
+        var my_comp1 = Vue.extend({
+            template: '#page1'
+        });
+
+        // 1-页面2对应的组件构造器
+        // 1、个人详细信息页面
+        var my_comp2 = Vue.extend({
+            template: '#page2'
+
+        });
+
+        // 1-页面3对应的组件构造器
+        // 1、编辑个人信息页面
+        var my_comp3 = Vue.extend({
+            template: '#page3'
+        });
+
+        // 1-页面4对应的组件构造器
+        // 1、用户提问页面
+        var my_comp4 = Vue.extend({
+            template: '#page4'
+        });
+
+        // 1-页面5对应的组件构造器
+        // 1、问题展示页面
+        var my_comp5 = Vue.extend({
+            template: '#page5'
+        });
+
+        // 1-页面6对应的组件构造器
+        // 1、回答页面
+        var my_comp6 = Vue.extend({
+            template: '#page6'
+        });
+
+        // 1-页面6对应的组件构造器
+        // 1、搜索页面
+        var my_comp7 = Vue.extend({
+            template: '#page7',
+            data() {
+                const item = {
+                    name: '张三',
+                    title: '最近学校有什么活动？',
+                    date: '2021-07-04 14:38:05',
+                    type: '校园文化',
+                    // details: '<button class="btn btn-success">点击查看</button>'
+                };
+                return {
+                    tableData: Array(10).fill(item),
+                    //为第一页或者最后一页时，首页，尾页不能点击
+                    fDisabled: false,
+                    lDisabled: false,
+                    //总项目数
+                    totalCount: 200,
+                    //分页数
+                    pageCount: 20,
+                    //当前页面
+                    pageCurrent: 1,
+                    //分页大小
+                    pagesize: 10,
+                    //显示分页按钮数
+                    showPages: 11,
+                    //开始显示的分页按钮
+                    showPagesStart: 1,
+                    //结束显示的分页按钮
+                    showPageEnd: 100,
+                    //分页数据
+                    arrayData: []
+                }
+            },
+            methods: {
+                showPage(pageIndex, $event, forceRefresh) {
+
+                    if (pageIndex > 0) {
+                        if (pageIndex > this.pageCount) {
+                            pageIndex = this.pageCount;
+                        }
+                        //判断数据是否需要更新
+                        var currentPageCount = Math.ceil(this.totalCount / this.pagesize);
+                        if (currentPageCount != this.pageCount) {
+                            pageIndex = 1;
+                            this.pageCount = currentPageCount;
+                        }
+                        else if (this.pageCurrent == pageIndex && currentPageCount == this.pageCount && typeof (forceRefresh) == "undefined") {
+                            console.log("not refresh");
+                            return;
+                        }
+
+                        //处理分页点中样式
+                        var buttons = $("#pager").find("span");
+                        for (var i = 0; i < buttons.length; i++) {
+                            if (buttons.eq(i).html() != pageIndex) {
+                                buttons.eq(i).removeClass("active");
+                            }
+                            else {
+                                buttons.eq(i).addClass("active");
+                            }
+                        }
+
+                        //测试数据 随机生成的
+                        var newPageInfo = [];
+                        var time = new Date();
+                        for (var i = 0; i < this.pagesize; i++) {
+                            newPageInfo[newPageInfo.length] = {
+                                timestamp: time,
+                                count: (i + (pageIndex - 1) * 20)
+                            };
+                        }
+                        this.pageCurrent = pageIndex;
+                        this.arrayData = newPageInfo;
+                        //如果当前页首页或者尾页，则上一页首页就不能点击，下一页尾页就不能点击
+                        if (this.pageCurrent === 1) {
+                            this.fDisabled = true;
+                        } else if (this.pageCurrent === this.pageCount) {
+                            this.lDisabled = true;
+                        } else {
+                            this.fDisabled = false;
+                            this.lDisabled = false;
+                        }
+
+                        //计算分页按钮数据
+                        if (this.pageCount > this.showPages) {
+                            if (pageIndex <= (this.showPages - 1) / 2) {
+                                this.showPagesStart = 1;
+                                this.showPageEnd = this.showPages - 1;
+                                console.log("showPage1")
+                            }
+                            else if (pageIndex >= this.pageCount - (this.showPages - 3) / 2) {
+                                this.showPagesStart = this.pageCount - this.showPages + 2;
+                                this.showPageEnd = this.pageCount;
+                                console.log("showPage2")
+                            }
+                            else {
+                                console.log("showPage3")
+                                this.showPagesStart = pageIndex - (this.showPages - 3) / 2;
+                                this.showPageEnd = pageIndex + (this.showPages - 3) / 2;
+                            }
+                        }
+                        console.log("showPagesStart:" + this.showPagesStart + ",showPageEnd:" + this.showPageEnd + ",pageIndex:" + pageIndex);
+                    }
+                }
+            },
+            mounted() {
+                this.showPage(this.pageCurrent, null, true);
+            },
+            computed: {
+            }
+        });
+
+
+        // 2-定义路由：建立 url-组件 的映射
+        var routes = [
+            {
+                path: '/', component: my_comp1
+                // children: [{
+                //     path: '/userIndex',
+                //     component: my_comp2
+                // }]
+            },
+            { path: '/userIndex', component: my_comp2 },
+            { path: '/editUser', component: my_comp3 },
+            { path: '/quetion', component: my_comp4 },
+            { path: '/showQuetion', component: my_comp5 },
+            { path: '/answer', component: my_comp6 },
+            { path: '/search', component: my_comp7 }
+        ];
+
+        // 3. 创建 router 实例，然后传 `routes` 配置
+        var router = new VueRouter({
+            routes: routes
+        })
+
+        // 注册富文本组件
+        // var quill = new kindeditor('#edit', {
+        //     theme: 'snow'
+        // });
+        var app = new Vue({
+            el: "#app",
+            router: router,
+            //     mounted () {
+            //     if (IsIE) {
+            //     window.addEventListener('hashchange', () => {
+            //         let currentPath = window.location.hash.slice(1)
+            //         if (this.$route.path !== currentPath) {
+            //         this.$router.push(currentPath)
+            //         }
+            //     }, false)
+            //     }
+            // }
+
+        });
+    </script>
+
+</body>
+
+</html>
